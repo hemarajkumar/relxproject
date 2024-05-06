@@ -1,0 +1,29 @@
+<app-header></app-header>
+<div class="company-search page-container">
+  <h2 class="d-flex">Search</h2>
+  <form class="search-form d-flex flex-column" (ngSubmit)="searchCompany()" [formGroup]="searchForm">
+    <mat-form-field class="search-bar" appearance="outline">
+        <input
+          matInput
+          placeholder="Company Name or Number"
+          #company
+          formControlName="companyName"
+          (blur)="updateErrorMessage()"
+          (keyup)="inputSearch($event)"
+          [attr.aria-label]="'Enter Company Name or Number'"
+          [tabIndex]="'1'"
+          autocomplete="off"
+          required>
+    </mat-form-field>
+    <span *ngIf="showErrorMessage" class="weeoe-mwaage">Enter Company Name or Number</span>
+    <button
+      mat-raised-button
+      [disabled]="!submitEnabled"
+      [attr.aria-label]="'Search Company'"
+      [tabIndex]="'2'"
+    >
+      Search
+    </button>
+  </form>
+  </div>
+  <app-company-list></app-company-list>

@@ -1,0 +1,25 @@
+<app-header></app-header>
+<div class="company-search page-container">
+  <h2 class="d-flex">Login</h2>
+  <form class="search-form d-flex flex-column" (ngSubmit)="submit()" [formGroup]="loginForm">
+    <mat-form-field class="search-bar" appearance="outline">
+        <input
+          matInput
+          placeholder="login"
+          #company
+          formControlName="login"
+          [attr.aria-label]="'Login...'"
+          [tabIndex]="'1'"
+          autocomplete="off"
+          required>
+    </mat-form-field>
+    <button
+      mat-raised-button
+      [disabled]="!submitEnabled"
+      [attr.aria-label]="'Submit'"
+    >
+      Submit
+    </button>
+  </form>
+  </div>
+

@@ -1,0 +1,42 @@
+<app-header></app-header>
+
+<div class="container page-container align-items-start">
+  <div class="d-flex mb-4">
+    <a routerLink="/">Home</a>
+  </div>
+  <ng-container *ngFor="let list of companyDetails">
+    <h2 class="d-flex">{{ list.title }} </h2>
+    <p class="d-flex flex-columnalign-items-start mb-5">
+      Company number&nbsp;&nbsp;<b>{{ list.company_number }}</b>
+    </p>
+
+    <p class="d-flex flex-column align-items-start">
+      <span>Registered office address</span>
+      <span><b>{{ list.address_snippet }}</b></span>
+    </p>
+
+    <p class="d-flex flex-column align-items-start">
+      <span>Company Status</span>
+      <span><b>{{ list.company_status }}</b></span>
+    </p>
+
+    <p class="d-flex flex-column align-items-start">
+      <span>Company type</span>
+      <span><b>{{ list.company_type }}</b></span>
+    </p>
+
+    <p class="d-flex flex-column align-items-start">
+      <span>Incorporated on</span>
+      <span><b>{{ list.company_incorporated | date: 'dd MMMM yyyy' }}</b></span>
+    </p>
+
+    <a
+    [attr.aria-label]="'List Officers'"
+    [tabIndex]="'1'"
+    [routerLink]="['/officerslist', list.company_number]"
+    class="d-flex"
+    >List Officers</a>
+    
+  </ng-container>
+</div>
+

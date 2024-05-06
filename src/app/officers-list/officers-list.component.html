@@ -1,0 +1,24 @@
+<app-header></app-header>
+
+<div class="container page-container align-items-start">
+  <div class="d-flex mb-4">
+    <a routerLink="/">Home</a>&nbsp;&nbsp;>&nbsp;&nbsp;
+    <a href="javascript:void()" (click)="navigatePage()">Company Details</a>
+  </div>
+
+
+  <h2 class="d-flex">{{ companyTitle }} - Officers</h2>
+  <p class="d-flex flex-columnalign-items-start mb-5">
+    Company number&nbsp;&nbsp;<b>{{ companyNumber }}</b>
+  </p>
+  <ng-container *ngIf="(officersList$ | async) as officers">
+    <div class="align-items-start">
+      <ng-container *ngFor="let list of officers.items; let i = index">
+        <p class="d-flex flex-column align-items-start">
+          <span><b>{{ list.name }}</b></span>
+          <span> {{ list.officer_role }}</span>
+        </p>
+      </ng-container>
+    </div>
+  </ng-container>
+</div>

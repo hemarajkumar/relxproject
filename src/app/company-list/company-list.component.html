@@ -1,0 +1,26 @@
+<div class="container company-list border" *ngIf="companyLists.length > 0">
+  <h2 class="d-flex">Search Results</h2>
+  <div class="company-list__rows">
+    <ng-container *ngFor="let list of companyLists; let i = index">
+      <div class="company-list__row">
+        <a
+          [attr.aria-label]="list.title"
+          [tabIndex]="i + 3"
+          [routerLink]="['/companydetails', list.company_number]"
+          (click)="navigateProductDetails(list.company_number)"
+          class="d-flex"
+          >{{ list.title }}</a>
+        <p>
+          <b>{{ list.company_number }}</b> - {{ list.description }}
+        </p>
+        <p>
+          {{ list.address_snippet }}
+        </p>
+      </div>
+    </ng-container>
+  </div>
+</div>
+
+<div class="container company-list border" *ngIf="companyLists.length == 0 && showErrorMessage">
+  <h2>There's no company exists...</h2>
+</div>

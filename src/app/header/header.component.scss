@@ -1,0 +1,27 @@
+.sticky-nav {
+  position: fixed;
+  top: 0px;
+  width: 100%;
+  left: 0;
+  z-index: 99999;
+}
+
+.container {
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+}
+
+.sticky-nav .logo-nav-wrap {
+  padding-top: 10px;
+  background: #fff;
+  box-shadow: 1px 2px 1px #dad9d9;
+}
+
+.assesment {
+  display: flex;
+  flex-direction: column;
+  h2 {
+    margin: 0px 0px 8px 0px;
+  }
+}
