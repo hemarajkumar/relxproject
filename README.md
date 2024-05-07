@@ -11,7 +11,7 @@ Thanks for giving me this opportunity to do this exercise. I mentioned done in t
 
 open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security - Run this command from the terminal in Mac Laptop
 
-I upload the project in Firebase CLI also
+I upload the project in Firebase CLI also. can you please open the link in incognito window. No idea, it's showing firebase setting in the normal chrome window. Also can you please trigger through command mentioned above in the Mac Laptop. Otherwise BE API call is returning CORS error. 
 https://relx-assessment.web.app/
 
 Criteria
