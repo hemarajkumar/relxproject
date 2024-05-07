@@ -32,3 +32,6 @@ Done - Bootstrap flex classes used
 
 Provide input validation -
 Done
+
+Restrict access to details page (you may mock the user authentication)
+currently I am working.
