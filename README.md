@@ -1,7 +1,7 @@
 Please run - npm install and npm start to view the page.
 One time, I got a bootstrap file not found error message during compilation while running NPM Start for the first time. If that happens, please run npm install again
 
-if the Material css showing, can you please run the command 'npm i @angular/cdk' for Mac browser 'sudo npm i @angular/cdk' and then run NPM start
+if the Material css showing error again, can you please run the command 'npm i @angular/cdk' for Mac browser 'sudo npm i @angular/cdk' and then run NPM start
 
 Following versions installed in my system while developing
 Angular CLI: 17.3.3
