@@ -99,3 +99,14 @@
     }
   }
 
+
+  clear(el: HTMLInputElement): void {
+    el.value = '';
+    this.noSearchResults = false;
+    this.products = [];
+    this.bypassApiCall = true;
+    this.searchSubject$.next('');
+    if (this.hasInlineError) {
+      this.onSearch.emit(Constants.RESET_SEARCH);
+    }
+  }
