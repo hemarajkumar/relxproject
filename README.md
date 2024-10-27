@@ -90,3 +90,12 @@
       }
     }
   }
+
+  
+  kBEnterEvent(product, searchCatInput): void {
+    if (product.withdrawnStatus !== 'WITHDRAWN') {
+      this.sendProduct(product, searchCatInput);
+      this.clear(searchCatInput);
+    }
+  }
+
