@@ -110,3 +110,28 @@
       this.onSearch.emit(Constants.RESET_SEARCH);
     }
   }
+
+noSearchResults = false;
+  withWithdrawn: ShellProduct[];
+  withdrawnInitDropdown: ShellProduct[];
+  config = environment.QUICKORDER_SEARCHBOX_CONFIG;
+  cfConfig = CF_QUICKORDER_SEARCHBOX_CONFIG;
+  products: Product[];
+  model$: Observable<ProductSearchPage> = this.productListComponentService.model$;
+  searchSubject$:Subject<string>;
+  private subscription = new Subscription();
+  public isPartNumberEligible$: Observable<boolean> = this.accountEligibilityService.isPartNumberEligible$;
+  private bypassApiCall: boolean;
+  isCfUser = false;
+  isCFDFOA:boolean=false;
+
+   constructor(
+    protected productListComponentService: ProductListComponentService,
+    protected quickOrderSearchService: QuickOrderSearchService,
+    protected winRef: WindowRef,
+    protected searchBoxComponentService: SearchBoxComponentService,
+    protected ref: ChangeDetectorRef,
+    protected accountEligibilityService: AccountEligibilityService,
+    private analyticsEventService: AnalyticsEventService,
+    protected activeCartService: ActiveCartFacade
+  ) { }
