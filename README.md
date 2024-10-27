@@ -38,3 +38,55 @@
         </a>
       </div>
     </div>
+
+
+
+
+  // Check if focus is on searchbox or result list elements
+  private isSearchboxFocused(): boolean {
+    return (
+      this.getResultElements().includes(this.getFocusedElement()) ||
+      this.winRef.document.querySelector('input[aria-label="search"]') === this.getFocusedElement()
+    );
+  }
+
+  // Return result list as HTMLElement array
+  private getResultElements(): HTMLElement[] {
+    return Array.from(this.winRef.document.querySelectorAll('.category-search-results > .category-search-result'));
+  }
+
+  private getFocusedElement(): HTMLElement {
+    return this.winRef.document.activeElement as HTMLElement;
+  }
+
+  private getFocusedIndex(): number {
+    return this.getResultElements().indexOf(this.getFocusedElement());
+  }
+
+  // Focus on previous item in results list
+  focusPreviousChild(event): void {
+    event.preventDefault(); // Negate normal keyscroll
+    const [results, focusedIndex] = [this.getResultElements(), this.getFocusedIndex()];
+    // Focus on last index moving to first
+    if (results.length) {
+      if (focusedIndex < 1) {
+        results[results.length - 1].focus();
+      } else {
+        results[focusedIndex - 1].focus();
+      }
+    }
+  }
+
+  // Focus on next item in results list
+  focusNextChild(event): void {
+    event.preventDefault(); // Negate normal keyscroll
+    const [results, focusedIndex] = [this.getResultElements(), this.getFocusedIndex()];
+    // Focus on first index moving to last
+    if (results.length) {
+      if (focusedIndex >= results.length - 1) {
+        results[0].focus();
+      } else {
+        results[focusedIndex + 1].focus();
+      }
+    }
+  }
