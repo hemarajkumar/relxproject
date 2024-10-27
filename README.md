@@ -1,39 +1,126 @@
-Please run - npm install and npm start to view the page.
-One time, I got a bootstrap file not found error message during compilation while running NPM Start for the first time. If that happens, please run npm install again
+   <div class="category-search-results quick-order-page" *ngIf="products"
+      [ngClass]="{'d-none':!products.length || hasInlineError, 'withdrawn-1': withdrawnInitDropdown?.length == 1,
+      'withdrawn-2': withdrawnInitDropdown?.length == 2, 'withdrawn-3': withdrawnInitDropdown?.length == 3}" 
+      [class.cf-search-results]="showProductSequence">
+      <div class="category-search-result" *ngFor="let product of products let index=i" 
+      [ngClass]="{'quicksearch-withdrawn': product.withdrawnStatus === 'WITHDRAWN'}"      
+      (keydown.arrowup)="focusPreviousChild($event)"
+      (keydown.arrowdown)="focusNextChild($event)"
+      (keydown.enter)="kBEnterEvent(product, searchCatInput)"
+      tabindex="{{i}}"
+      id="qa-product-tile-{{product.displayCode}}">
+        <a id="image_prod_cat_link" class="image-prod-category d-none d-md-block">
+          <cx-media *ngIf="config.displayProductImages" 
+            [container]="product.images" format="27.2Wx27.2H"
+            [alt]="product.summary">
+          </cx-media>
+        </a>
+        <a id="product_desc_link" (click)="sendProduct(product, searchCatInput);clear(searchCatInput)" 
+            class="products-description"
+            [class.has-media]="config.displayProductImages">
+          <div class="product-and-pack">
+            <span class="category-search-product-name" [innerHTML]="product.salestext"></span>
+          </div>
+           <span class="part-number-wrapper">
+            <span class="part-number mr-2" *ngIf="isPartNumberEligible$ | async"
+              >{{ 'quickAddModal.partNumber' | cxTranslate }}
+              {{ product.partNumber ? product.partNumber : ('common.not_provided' | cxTranslate) }}</span
+            >
+          </span>
+          
+  <span id="material_code_info" class="category-material-code">{{  ('invoicedetails.productdetails.productcode') | cxTranslate }} {{ product.displayCode}} {{orderContractNumber}}
+            <span *ngIf="showProductSequence && orderContractNumber && product?.isContractProduct" class="contract-product-label ml-2">{{ 'searchBox.contractProductLabel' | cxTranslate }}</span>
+            <span id="withdraw_status_info" class="with-drawn-status" *ngIf="product.withdrawnStatus"
+              [ngClass]="product.withdrawnStatus?.toLowerCase()">
+              {{('productDetails.withdrawnstatus.' + product.withdrawnStatus) | cxTranslate }}
+            </span>
+          </span>
+        </a>
+      </div>
+    </div>
 
-if the Material css showing error again, can you please run the command 'npm i @angular/cdk' for Mac browser 'sudo npm i @angular/cdk' and then run NPM start
-
-Following versions installed in my system while developing
-Angular CLI: 17.3.3
-Node: v18.18.2
 
 
-Assessment Work Details. 
-Thanks for giving me this opportunity to do this exercise. I mentioned done in the section I completed. While developing, I am facing one issue while calling the API call, I am getting a CORS error. The API call is always failing, and BE not returning data. Then I managed to get the API by disabling security options in Chrome. If the CORS error happening, Please run the below command in the terminal, chrome browser will open from the terminal - that's the Mac terminal command. Access the page from the browser opened from the terminal. If you will make a video call, I will show you a demo from my laptop. 
 
-open -na Google\ Chrome --args --user-data-dir=/tmp/temporary-chrome-profile-dir --disable-web-security - Run this command from the terminal in Mac Laptop
+      // Focus on next item in results list
+  focusNextChild(event): void {
+    event.preventDefault(); // Negate normal keyscroll
+    const [results, focusedIndex] = [this.getResultElements(), this.getFocusedIndex()];
+    // Focus on first index moving to last
+    if (results.length) {
+      if (focusedIndex >= results.length - 1) {
+        results[0].focus();
+      } else {
+        results[focusedIndex + 1].focus();
+      }
+    }
+  }
 
-I upload the project in Firebase CLI also. can you please open the link in incognito window. No idea, it's showing firebase setting in the normal chrome window. Also can you please trigger through command mentioned above in the Mac Laptop. Otherwise BE API call is returning CORS error. 
-https://relx-assessment.web.app/
 
-Criteria
+   // Return result list as HTMLElement array
+  private getResultElements(): HTMLElement[] {
+    return Array.from(this.winRef.document.querySelectorAll('.category-search-results > .category-search-result'));
+  }
 
-A user can search for a company by name or company number -
-Done
+  private getFocusedElement(): HTMLElement {
+  return this.winRef.document.activeElement as HTMLElement;
+  }
 
-The result of the search is displayed -
-Done
+  private getFocusedIndex(): number {
+    return this.getResultElements().indexOf(this.getFocusedElement());
+  }
 
-The user can click on any company to view its details -
-Done
 
-Optional
+// Focus on previous item in results list
+  focusPreviousChild(event): void {
+    event.preventDefault(); // Negate normal keyscroll
+    const [results, focusedIndex] = [this.getResultElements(), this.getFocusedIndex()];
+    // Focus on last index moving to first
+    if (results.length) {
+      if (focusedIndex < 1) {
+        results[results.length - 1].focus();
+      } else {
+        results[focusedIndex - 1].focus();
+      }
+    }
+  }
 
-Use Material Design or Bootstrap for styling -
-Done - Bootstrap flex classes used
+  // Focus on next item in results list
+  focusNextChild(event): void {
+    event.preventDefault(); // Negate normal keyscroll
+    const [results, focusedIndex] = [this.getResultElements(), this.getFocusedIndex()];
+    // Focus on first index moving to last
+    if (results.length) {
+      if (focusedIndex >= results.length - 1) {
+        results[0].focus();
+      } else {
+        results[focusedIndex + 1].focus();
+      }
+    }
+  }
 
-Provide input validation -
-Done
+  sendProduct(product, searchCatInput): void {
+    this.products = [];
+    this.selectedProductDetails.emit(product);
+    if (this.analyticsEventService.isCfCustomer()) {
+      this.pushProductSearchTag(searchCatInput?.value, product.salestext, product.displayCode);
+    }
+  }
 
-Restrict access to details page (you may mock the user authentication)
-currently I am working.
+  kBEnterEvent(product, searchCatInput): void {
+    if (product.withdrawnStatus !== 'WITHDRAWN') {
+      this.sendProduct(product, searchCatInput);
+      this.clear(searchCatInput);
+    }
+  }
+
+  clear(el: HTMLInputElement): void {
+    el.value = '';
+    this.noSearchResults = false;
+    this.products = [];
+    this.bypassApiCall = true;
+    this.searchSubject$.next('');
+    if (this.hasInlineError) {
+      this.onSearch.emit(Constants.RESET_SEARCH);
+    }
+  }
